@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priyanshu Pandey | Embedded Systems Engineer</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+body { background: #0f172a; }
+
+#starCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+}
+
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.4s ease;
+}
+.glass:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 30px rgba(59,130,246,0.3);
+  border-color: #3b82f6;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #60a5fa, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+.float { animation: float 4s ease-in-out infinite; }
+
+/* ── CERTIFICATES ── */
+.cert-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(.23,1,.32,1);
+  cursor: pointer;
+  position: relative;
+}
+.cert-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(168,85,247,0.08) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+.cert-card:hover::before { opacity: 1; }
+.cert-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(99,179,237,0.5);
+  box-shadow: 0 20px 60px rgba(59,130,246,0.25), 0 0 0 1px rgba(99,179,237,0.2);
+}
+.cert-img-wrap {
+  position: relative;
+  width: 100%; height: 190px;
+  overflow: hidden;
+  background: #0d1526;
+}
+.cert-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  filter: brightness(0.9);
+}
+.cert-card:hover .cert-img-wrap img {
+  transform: scale(1.07);
+  filter: brightness(1.05);
+}
+.cert-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(15,23,42,0.75);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 2;
+}
+.cert-card:hover .cert-overlay { opacity: 1; }
+.cert-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 999px;
+}
+
+/* ── LIGHTBOX ── */
+#certLightbox {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(5,10,20,0.92);
+  backdrop-filter: blur(10px);
+  align-items: center; justify-content: center; flex-direction: column;
+  padding: 24px;
+}
+#certLightbox.open { display: flex; }
+#certLightbox img {
+  max-width: 90vw; max-height: 80vh;
+  border-radius: 12px;
+  border: 2px solid rgba(99,179,237,0.4);
+  box-shadow: 0 0 80px rgba(59,130,246,0.3);
+  animation: lbIn 0.3s cubic-bezier(.23,1,.32,1);
+}
+@keyframes lbIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+#lbClose {
+  position: absolute; top: 20px; right: 26px;
+  font-size: 2.5rem; color: #94a3b8;
+  cursor: pointer; background: none; border: none; line-height: 1;
+  transition: color 0.2s, transform 0.2s;
+}
+#lbClose:hover { color: #fff; transform: rotate(90deg); }
+#lbTitle {
+  margin-top: 16px; color: #cbd5e1;
+  font-size: 1rem; letter-spacing: 0.04em; text-align: center;
+}
+</style>
+</head>
+
+<body class="text-slate-200 font-sans">
+
+<canvas id="starCanvas"></canvas>
+
+<!-- ══ HERO ══ -->
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+  <img src="photo.png"
+       class="w-56 h-56 object-cover rounded-full border-4 border-blue-500 mb-6 float shadow-xl shadow-blue-500/40"
+       style="object-position: 50% 20%;"
+       data-aos="zoom-in">
+
+  <h1 class="text-5xl md:text-7xl font-black mb-4 gradient-text" data-aos="fade-up">
+    Priyanshu Pandey
+  </h1>
+
+  <div class="text-xl md:text-2xl text-slate-400 mb-6" data-aos="fade-up" data-aos-delay="200">
+    I am a <span id="typed" class="text-blue-400 font-bold"></span>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="py-24 max-w-5xl mx-auto px-6 text-center">
+  <h2 class="text-3xl font-bold gradient-text mb-8" data-aos="fade-right">About Me</h2>
+  <p class="text-slate-400 text-lg leading-relaxed" data-aos="fade-left">
+    B.Tech Electronics and Communication Engineering student (CGPA: 8.12).
+    Focused on Embedded Systems, IoT, and Industrial Automation.
+    Hands-on experience with ESP32, STM32 (HAL), 8051 (Assembly),
+    PLC programming and real-time sensor-based automation systems.
+  </p>
+  <div class="flex justify-center mt-8">
+    <a href="Priyanshu_Pandey_CV.pdf" download
+       class="inline-flex items-center gap-3 px-7 py-3 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40">
+      <i class="fas fa-download"></i> Download CV
+    </a>
+  </div>
+</section>
+
+<!-- ══ SKILLS ══ -->
+<section class="py-24 bg-[#0a0f1d]/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center gradient-text mb-16" data-aos="fade-up">Technical Skills</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="glass p-8 rounded-xl" data-aos="flip-left">
+        <h3 class="font-bold text-blue-400 mb-4">Languages</h3>
+        <ul class="space-y-2 text-slate-300">
+          <li>Embedded C</li>
+          <li>C / C++</li>
+          <li>8051 Assembly</li>
+          <li>MicroPython</li>
+          <li>Ladder Logic</li>
+        </ul>
+      </div>
+
+      <div class="glass p-8 rounded-xl" data-aos="flip-up">
+        <h3 class="font-bold text-blue-400 mb-4">Platforms</h3>
+        <ul class="space-y-2 text-slate-300">
+          <li>ESP32</li>
+          <li>STM32 (HAL)</li>
+          <li>8051 Microcontroller</li>
+          <li>Arduino</li>
+        </ul>
+      </div>
+
+      <div class="glass p-8 rounded-xl" data-aos="flip-right">
+        <h3 class="font-bold text-blue-400 mb-4">Tools</h3>
+        <ul class="space-y-2 text-slate-300">
+          <li>Keil</li>
+          <li>Cadence Xcelium</li>
+          <li>LTSpice</li>
+          <li>Blynk IoT</li>
+          <li>Arduino IDE</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="grid md:grid-cols-2 gap-10">
+
+  <!-- LFR -->
+  <div class="glass p-8 rounded-xl" data-aos="zoom-in">
+    <div class="project-img">
+      <img src="lfrimg.jpeg" alt="Line Following Robot">
+    </div>
+    <h3 class="text-xl font-bold text-white mb-4">Line Following Robot</h3>
+    <p class="text-slate-400">
+      ESP32-based autonomous robot using PID motor control and IR sensor array for accurate high-speed path tracking.
+    </p>
+  </div>
+
+  <!-- Multi Zone Power -->
+  <div class="glass p-8 rounded-xl" data-aos="zoom-in" data-aos-delay="100">
+    <div class="project-img">
+      <img src="powerimg.jpeg" alt="Multi Zone Power Control">
+    </div>
+    <h3 class="text-xl font-bold text-white mb-4">Multi-Zone Power Control System</h3>
+    <p class="text-slate-400">
+      Energy-efficient automation system using PIR and DHT22 sensors with relay-based appliance control logic.
+    </p>
+  </div>
+
+  <!-- IoT Water -->
+  <div class="glass p-8 rounded-xl" data-aos="zoom-in" data-aos-delay="200">
+    <div class="project-img">
+      <img src="iotimg.jpeg" alt="IoT Water Quality Monitoring">
+    </div>
+    <h3 class="text-xl font-bold text-white mb-4">IoT Water Quality Monitoring</h3>
+    <p class="text-slate-400">
+      ESP32-based water adulteration detection using TDS and turbidity sensors with Blynk cloud visualization and threshold alerts.
+    </p>
+  </div>
+
+  <!-- Voice Automation -->
+  <div class="glass p-8 rounded-xl" data-aos="zoom-in" data-aos-delay="300">
+    <div class="project-img">
+      <img src="voiccntimg.jpeg" alt="Voice Based Home Automation">
+    </div>
+    <h3 class="text-xl font-bold text-white mb-4">
+      Voice-Based Home Automation (8051)
+    </h3>
+    <p class="text-slate-400">
+      8051 microcontroller programmed in Assembly language. Bluetooth-based UART communication to control appliances through relay modules using voice commands from mobile.
+    </p>
+  </div>
+
+</div>
+
+<!-- ══ CERTIFICATES ══ -->
+<section class="py-24 bg-[#0a0f1d]/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center gradient-text mb-4" data-aos="fade-up">Certificates</h2>
+    <p class="text-center text-slate-500 mb-14 text-sm tracking-widest uppercase" data-aos="fade-up" data-aos-delay="100">
+      Click any card to view full certificate
+    </p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
+
+      <!-- Sailor C++ -->
+      <div class="cert-card" data-aos="fade-up" data-aos-delay="0"
+           onclick="openLightbox('sailor.png', 'CS107: C++ Programming — Sailor')">
+        <div class="cert-img-wrap">
+          <img src="sailor.png" alt="C++ Certificate">
+          <div class="cert-overlay">
+            <span class="text-white text-sm font-semibold flex items-center gap-2">
+              <i class="fas fa-expand-alt text-blue-300"></i> View Certificate
+            </span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <span class="cert-badge bg-blue-500/20 text-blue-300 border border-blue-500/30 mb-3" style="display:inline-flex;">
+            <i class="fas fa-certificate"></i> Sailor
+          </span>
+          <h3 class="text-white font-bold text-base leading-snug mb-1">CS107: C++ Programming</h3>
+          <p class="text-slate-500 text-xs">Jan '26</p>
+        </div>
+      </div>
+
+      <!-- Udemy MCU Driver Dev -->
+      <div class="cert-card" data-aos="fade-up" data-aos-delay="100"
+           onclick="openLightbox('mcu1.png', 'Mastering Microcontroller & Embedded Driver Development — Udemy')">
+        <div class="cert-img-wrap">
+          <img src="mcu1.png" alt="MCU Driver Dev Certificate">
+          <div class="cert-overlay">
+            <span class="text-white text-sm font-semibold flex items-center gap-2">
+              <i class="fas fa-expand-alt text-purple-300"></i> View Certificate
+            </span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <span class="cert-badge bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-3" style="display:inline-flex;">
+            <i class="fas fa-certificate"></i> Udemy
+          </span>
+          <h3 class="text-white font-bold text-base leading-snug mb-1">Mastering Microcontroller &amp; Embedded Driver Dev</h3>
+          <p class="text-slate-500 text-xs">Feb '26</p>
+        </div>
+      </div>
+
+      <!-- Udemy Embedded C Foundation -->
+      <div class="cert-card" data-aos="fade-up" data-aos-delay="200"
+           onclick="openLightbox('udemy.png', 'Foundation Course on Embedded C Programming — Udemy')">
+        <div class="cert-img-wrap">
+          <img src="udemy.png" alt="Embedded C Certificate">
+          <div class="cert-overlay">
+            <span class="text-white text-sm font-semibold flex items-center gap-2">
+              <i class="fas fa-expand-alt text-cyan-300"></i> View Certificate
+            </span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <span class="cert-badge bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 mb-3" style="display:inline-flex;">
+            <i class="fas fa-certificate"></i> Udemy
+          </span>
+          <h3 class="text-white font-bold text-base leading-snug mb-1">Foundation Course: Embedded C Programming</h3>
+          <p class="text-slate-500 text-xs">Oct '23</p>
+        </div>
+      </div>
+
+      <!-- DBMS -->
+      <div class="cert-card" data-aos="fade-up" data-aos-delay="300"
+           onclick="openLightbox('dbms.png', 'Database Management Systems Certificate')">
+        <div class="cert-img-wrap">
+          <img src="dbms.png" alt="DBMS Certificate">
+          <div class="cert-overlay">
+            <span class="text-white text-sm font-semibold flex items-center gap-2">
+              <i class="fas fa-expand-alt text-emerald-300"></i> View Certificate
+            </span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <span class="cert-badge bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mb-3" style="display:inline-flex;">
+            <i class="fas fa-certificate"></i> DBMS
+          </span>
+          <h3 class="text-white font-bold text-base leading-snug mb-1">Database Management Systems</h3>
+          <p class="text-slate-500 text-xs">—</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ LIGHTBOX ══ -->
+<div id="certLightbox" onclick="if(event.target===this) closeLightbox()">
+  <button id="lbClose" onclick="closeLightbox()" title="Close">&times;</button>
+  <img id="lbImg" src="" alt="Certificate">
+  <p id="lbTitle"></p>
+</div>
+
+<!-- ══ ACHIEVEMENT ══ -->
+<section class="py-24 text-center">
+  <h2 class="text-3xl font-bold gradient-text mb-8" data-aos="fade-up">Achievement</h2>
+  <p class="text-slate-400 text-lg" data-aos="fade-up" data-aos-delay="200">
+    🏆 Winner – COGNITIA 2025 Hackathon (PID-based Line Following Robot)
+  </p>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="py-24 max-w-4xl mx-auto px-6 text-center">
+  <h2 class="text-3xl font-bold gradient-text mb-12" data-aos="fade-up">Get In Touch</h2>
+  <div class="glass p-8 rounded-2xl" data-aos="zoom-in">
+    <p class="mb-3"><i class="fas fa-envelope text-blue-400 mr-2"></i> p90009824@gmail.com</p>
+    <p class="mb-3"><i class="fas fa-phone text-green-400 mr-2"></i> +91-6394157173</p>
+    <p class="mb-3">
+      <i class="fab fa-linkedin text-blue-500 mr-2"></i>
+      <a href="https://linkedin.com/in/priyanshu-pandey-a267b4297" target="_blank" class="hover:text-blue-400 transition-colors">LinkedIn</a>
+    </p>
+    <p>
+      <i class="fab fa-github text-white mr-2"></i>
+      <a href="https://github.com/p66662432-oss" target="_blank" class="hover:text-slate-300 transition-colors">GitHub</a>
+    </p>
+  </div>
+</section>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, duration: 800 });
+
+  new Typed('#typed', {
+    strings: [
+      'Embedded Systems Developer',
+      'IoT Systems Builder',
+      'PLC Automation Enthusiast',
+      '8051 Assembly Programmer'
+    ],
+    typeSpeed: 50,
+    backSpeed: 30,
+    loop: true
+  });
+
+  function openLightbox(src, title) {
+    document.getElementById('lbImg').src = src;
+    document.getElementById('lbTitle').textContent = title;
+    document.getElementById('certLightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('certLightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  const canvas = document.getElementById('starCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  let stars = [];
+  for (let i = 0; i < 120; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2,
+      dx: (Math.random() - 0.5),
+      dy: (Math.random() - 0.5)
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'white';
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+      star.x += star.dx;
+      star.y += star.dy;
+      if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+      if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+
+</body>
+</html>
